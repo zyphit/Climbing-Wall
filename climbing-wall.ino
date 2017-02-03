@@ -4,6 +4,9 @@
 //controlling them, so three outputs per colour, plus three digital inputs for switches, 12 pins total.
 //based on code courtesy of EEEnthusiast.com.
 //
+//Each button press blinks through each LED three times, then blinks LEDs randomly 25 times, then blinks all
+//eight LEDs together three times.
+//
 //Uses Arduino nano, three 74HC595 shift registers, 24 LEDs (8 ea of green, yellow, red), and three momentary
 //push buttons.
 
@@ -61,6 +64,8 @@ if (sensor_value == HIGH) {
     delay(5);
   } else {
     LEDblink(grn_DS_pin,grn_STCP_pin,grn_SHCP_pin);
+    LEDrandom(grn_DS_pin,grn_STCP_pin,grn_SHCP_pin);
+    threeblink(grn_DS_pin,grn_STCP_pin,grn_SHCP_pin);
     }
 
 sensor_value = digitalRead(red_button);
@@ -68,6 +73,8 @@ if (sensor_value == HIGH) {
     delay(5);
   } else {
     LEDblink(red_DS_pin,red_STCP_pin,red_SHCP_pin);
+    LEDrandom(red_DS_pin,red_STCP_pin,red_SHCP_pin);
+    threeblink(red_DS_pin,red_STCP_pin,red_SHCP_pin);
     }
 
 sensor_value = digitalRead(yl_button);
@@ -75,6 +82,8 @@ if (sensor_value == HIGH) {
     delay(5);
   } else {
     LEDblink(yl_DS_pin,yl_STCP_pin,yl_SHCP_pin);
+    LEDrandom(yl_DS_pin,yl_STCP_pin,yl_SHCP_pin);
+    threeblink(yl_DS_pin,yl_STCP_pin,yl_SHCP_pin);
     }
 }
 
@@ -94,7 +103,7 @@ digitalWrite(STCP_pin, HIGH);
 //function that blinks LEDs on a shift register.  Lights up either green or red or yellow depending on input parameters
 void LEDblink(int DS_pin, int STCP_pin, int SHCP_pin)
 {
-    for(int j = 0; j<3; j++)                    //repeat pattern j times
+  for(int j = 0; j<4; j++)                    //repeat pattern j times
     {
     for(int i = 0; i<8; i++)                    //cycle LEDs from 0-7
     {
@@ -115,5 +124,40 @@ void LEDblink(int DS_pin, int STCP_pin, int SHCP_pin)
       registers[i]= LOW;
     }
     writereg(DS_pin,STCP_pin,SHCP_pin);
+  }
+}
+
+//function that blinks LEDs randomly with an increasing rate.
+void LEDrandom(int DS_pin, int STCP_pin, int SHCP_pin)
+{
+    for(int i = 25; i=1; i--)
+    {
+      int randomLED = random(0,7);
+      registers[randomLED] = HIGH;
+      writereg(DS_pin,STCP_pin,SHCP_pin);
+      delay(i*20);
+      registers[randomLED] = LOW;
+      writereg(DS_pin,STCP_pin,SHCP_pin);
     }
 }
+
+//function that blinks all eight LEDs on and off 3 times.
+void threeblink(int DS_pin, int STCP_pin, int SHCP_pin)
+{
+    for (int j = 0; j<4; j++)
+    {
+      for(int i = 0; i<8; i++)
+      {
+        registers[i] = HIGH;
+      }
+      writereg(DS_pin,STCP_pin,SHCP_pin);
+      delay(100);
+      for(int i = 0; i < 8; i++)
+      {
+        registers[i] = LOW;
+      }
+      writereg(DS_pin,STCP_pin,SHCP_pin);
+      delay(50);
+    }   
+}
+
