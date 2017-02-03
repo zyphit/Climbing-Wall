@@ -10,21 +10,21 @@
 //Uses Arduino nano, three 74HC595 shift registers, 24 LEDs (8 ea of green, yellow, red), and three momentary
 //push buttons.
 
-int grn_DS_pin = 12;
-int grn_STCP_pin = 11;
-int grn_SHCP_pin = 10;
+const int grn_DS_pin = 12;
+const int grn_STCP_pin = 11;
+const int grn_SHCP_pin = 10;
 
-int red_DS_pin = 9;
-int red_STCP_pin = 8;
-int red_SHCP_pin = 7;
+const int red_DS_pin = 9;
+const int red_STCP_pin = 8;
+const int red_SHCP_pin = 7;
 
-int yl_DS_pin = A0;
-int yl_STCP_pin = A1;
-int yl_SHCP_pin = A2;
+const int yl_DS_pin = A0;
+const int yl_STCP_pin = A1;
+const int yl_SHCP_pin = A2;
 
-int grn_button = 4;
-int red_button = 3;
-int yl_button = 2;
+const int grn_button = 4;
+const int red_button = 3;
+const int yl_button = 2;
 
 int sensor_value = HIGH; //checks state of button presses (low = pressed)
 
@@ -36,25 +36,19 @@ void setup()
   pinMode(A0,OUTPUT);
   pinMode(A1,OUTPUT);
   pinMode(A2,OUTPUT);
-  pinMode(7,OUTPUT);
-  pinMode(8,OUTPUT);
-  pinMode(9,OUTPUT);
-  pinMode(10,OUTPUT);
-  pinMode(11,OUTPUT);
-  pinMode(12,OUTPUT);
-
+  for (int i=7; i<=12; i++)
+    pinMode(i,OUTPUT);
+  
   // Set pins 2-4 as inputs with internal pullup resistors for switches
   for (int i =2;i<=4;i++)
     pinMode(i,INPUT_PULLUP);
 
   // turn off all ights to start    
   for(int i = 0; i<8; i++)
-    {
       registers[i]= LOW;
-    }
-    writereg(grn_DS_pin,grn_STCP_pin,grn_SHCP_pin);
-    writereg(red_DS_pin,red_STCP_pin,red_SHCP_pin);
-    writereg(yl_DS_pin,yl_STCP_pin,yl_SHCP_pin);
+  writereg(grn_DS_pin,grn_STCP_pin,grn_SHCP_pin);
+  writereg(red_DS_pin,red_STCP_pin,red_SHCP_pin);
+  writereg(yl_DS_pin,yl_STCP_pin,yl_SHCP_pin);
 }
 
 void loop() //check for each button press and then light up the corresponding LEDs
@@ -120,9 +114,7 @@ void LEDblink(int DS_pin, int STCP_pin, int SHCP_pin)
       delay(100);
     }
     for(int i = 0; i<8; i++)                    // turn off all ights at the end of the loop    
-    {
       registers[i]= LOW;
-    }
     writereg(DS_pin,STCP_pin,SHCP_pin);
   }
 }
@@ -147,15 +139,11 @@ void threeblink(int DS_pin, int STCP_pin, int SHCP_pin)
     for (int j = 0; j<4; j++)
     {
       for(int i = 0; i<8; i++)
-      {
         registers[i] = HIGH;
-      }
       writereg(DS_pin,STCP_pin,SHCP_pin);
       delay(100);
       for(int i = 0; i < 8; i++)
-      {
         registers[i] = LOW;
-      }
       writereg(DS_pin,STCP_pin,SHCP_pin);
       delay(50);
     }   
