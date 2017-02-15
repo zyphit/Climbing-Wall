@@ -55,8 +55,6 @@ void loop() //check for each button press and then light up the corresponding LE
 {
 sensor_value = digitalRead(grn_button);
 if (sensor_value == HIGH) {
-    delay(3);
-  } else {
     LEDblink(grn_DS_pin,grn_STCP_pin,grn_SHCP_pin);
     LEDrandom(grn_DS_pin,grn_STCP_pin,grn_SHCP_pin);
     threeblink(grn_DS_pin,grn_STCP_pin,grn_SHCP_pin);
@@ -64,8 +62,6 @@ if (sensor_value == HIGH) {
 
 sensor_value = digitalRead(red_button);
 if (sensor_value == HIGH) {
-    delay(3);
-  } else {
     LEDblink(red_DS_pin,red_STCP_pin,red_SHCP_pin);
     LEDrandom(red_DS_pin,red_STCP_pin,red_SHCP_pin);
     threeblink(red_DS_pin,red_STCP_pin,red_SHCP_pin);
@@ -73,8 +69,6 @@ if (sensor_value == HIGH) {
 
 sensor_value = digitalRead(yl_button);
 if (sensor_value == HIGH) {
-    delay(3);
-  } else {
     LEDblink(yl_DS_pin,yl_STCP_pin,yl_SHCP_pin);
     LEDrandom(yl_DS_pin,yl_STCP_pin,yl_SHCP_pin);
     threeblink(yl_DS_pin,yl_STCP_pin,yl_SHCP_pin);
