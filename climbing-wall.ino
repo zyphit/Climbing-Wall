@@ -107,7 +107,7 @@ void LEDblink(int DS_pin, int STCP_pin, int SHCP_pin)
       writereg(DS_pin,STCP_pin,SHCP_pin);
       delay(100);
     }
-    registers[0] = LOW;                      // turns off last LED at end of loop, precious for loop leaves this one HIGH.
+    registers[0] = LOW;                      // turns off last LED at end of loop, precious for loop leaves this HIGH.
     writereg(DS_pin,STCP_pin,SHCP_pin);
   } 
 }
