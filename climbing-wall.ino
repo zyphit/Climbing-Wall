@@ -92,7 +92,7 @@ digitalWrite(STCP_pin, HIGH);
 void LEDblink(int DS_pin, int STCP_pin, int SHCP_pin)
 {
   for(int j=0;j<4; j++)                    //repeat pattern j times
-    {
+  {
     for(int i=0; i<8; i++)                    //cycle LEDs from 0-7
     {
       registers[i] = HIGH;
