@@ -28,7 +28,7 @@ const int yl_button = 2;
 
 int sensor_value = HIGH; //checks state of button presses (low = pressed)
 
-boolean registers[8];   //stores LED output states for shift register
+boolean registers[7];   //stores LED output states for shift register, for eight LEDs, 0-7
 
 void setup()
 {
