@@ -36,11 +36,11 @@ void setup()
   pinMode(A0,OUTPUT);
   pinMode(A1,OUTPUT);
   pinMode(A2,OUTPUT);
-  for(int i=7; i<=12; i++)
+  for(int i=7; i<13; i++)
     pinMode(i,OUTPUT);
   
   // Set pins 2-4 as inputs with internal pullup resistors for switches
-  for(int i=2; i<=4; i++)
+  for(int i=2; i<5; i++)
     pinMode(i,INPUT_PULLUP);
 
   // turn off all ights to start    
@@ -88,7 +88,7 @@ for(int i=7; i>=0; i--)
 digitalWrite(STCP_pin, HIGH);
 }
 
-//function that blinks LEDs on a shift register.  Lights up either green or red or yellow depending on input parameters
+//function that blinks LEDs on a shift register in order up then down.  
 void LEDblink(int DS_pin, int STCP_pin, int SHCP_pin)
 {
   for(int j=0;j<4; j++)                    //repeat pattern j times
@@ -107,10 +107,7 @@ void LEDblink(int DS_pin, int STCP_pin, int SHCP_pin)
       writereg(DS_pin,STCP_pin,SHCP_pin);
       delay(100);
     }
-    for(int i=0; i<8; i++)                    // turn off all ights at the end of the loop    
-      registers[i]= LOW;
-    writereg(DS_pin,STCP_pin,SHCP_pin);
-  }
+  } 
 }
 
 //function that blinks LEDs randomly with an increasing rate.
