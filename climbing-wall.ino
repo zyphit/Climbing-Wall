@@ -26,8 +26,6 @@ const int grn_button = 4;
 const int red_button = 3;
 const int yl_button = 2;
 
-int sensor_value = HIGH; //checks state of button presses (low = pressed)
-
 boolean registers[7];   //stores LED output states for shift register, for eight LEDs, 0-7
 
 void setup()
@@ -36,15 +34,15 @@ void setup()
   pinMode(A0,OUTPUT);
   pinMode(A1,OUTPUT);
   pinMode(A2,OUTPUT);
-  for(int i=7; i<13; i++)
+  for(int i=7; i<=12; i++)
     pinMode(i,OUTPUT);
   
   // Set pins 2-4 as inputs with internal pullup resistors for switches
-  for(int i=2; i<5; i++)
+  for(int i=2; i<=4; i++)
     pinMode(i,INPUT_PULLUP);
 
   // turn off all ights to start    
-  for(int i=0; i<8; i++)
+  for(int i=0; i<=7; i++)
       registers[i]= LOW;
   writereg(grn_DS_pin,grn_STCP_pin,grn_SHCP_pin);
   writereg(red_DS_pin,red_STCP_pin,red_SHCP_pin);
@@ -53,22 +51,19 @@ void setup()
 
 void loop() //check for each button press and then light up the corresponding LEDs
 {
-sensor_value = digitalRead(grn_button);
-if (sensor_value == HIGH) {
+if (digitalRead(grn_button) == LOW) {
     LEDblink(grn_DS_pin,grn_STCP_pin,grn_SHCP_pin);
     LEDrandom(grn_DS_pin,grn_STCP_pin,grn_SHCP_pin);
     threeblink(grn_DS_pin,grn_STCP_pin,grn_SHCP_pin);
     }
 
-sensor_value = digitalRead(red_button);
-if (sensor_value == HIGH) {
+if (digitalRead(red_button) == LOW) {
     LEDblink(red_DS_pin,red_STCP_pin,red_SHCP_pin);
     LEDrandom(red_DS_pin,red_STCP_pin,red_SHCP_pin);
     threeblink(red_DS_pin,red_STCP_pin,red_SHCP_pin);
     }
 
-sensor_value = digitalRead(yl_button);
-if (sensor_value == HIGH) {
+if (digitalRead(yl_button == LOW) {
     LEDblink(yl_DS_pin,yl_STCP_pin,yl_SHCP_pin);
     LEDrandom(yl_DS_pin,yl_STCP_pin,yl_SHCP_pin);
     threeblink(yl_DS_pin,yl_STCP_pin,yl_SHCP_pin);
@@ -91,9 +86,9 @@ digitalWrite(STCP_pin, HIGH);
 //function that blinks LEDs on a shift register in order up then down.  
 void LEDblink(int DS_pin, int STCP_pin, int SHCP_pin)
 {
-  for(int j=0;j<4; j++)                    //repeat pattern j times
+  for(int j=0; j<=3; j++)                    //repeat pattern j times
   {
-    for(int i=0; i<8; i++)                    //cycle LEDs from 0-7
+    for(int i=0; i<=7; i++)                    //cycle LEDs from 0-7
     {
       registers[i] = HIGH;
       registers[i-1] = LOW;
@@ -129,13 +124,13 @@ void LEDrandom(int DS_pin, int STCP_pin, int SHCP_pin)
 //function that blinks all eight LEDs on and off 3 times.
 void threeblink(int DS_pin, int STCP_pin, int SHCP_pin)
 {
-    for(int j=0; j<4; j++)
+    for(int j=0; j<=3; j++)
     {
-      for(int i=0; i<8; i++)
+      for(int i=0; i<=7; i++)
         registers[i] = HIGH;
       writereg(DS_pin,STCP_pin,SHCP_pin);
       delay(100);
-      for(int i=0; i<8; i++)
+      for(int i=0; i<=7; i++)
         registers[i] = LOW;
       writereg(DS_pin,STCP_pin,SHCP_pin);
       delay(50);
