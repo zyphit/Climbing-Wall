@@ -48,6 +48,9 @@ void setup()
   writereg(grn_DS_pin,grn_STCP_pin,grn_SHCP_pin);
   writereg(red_DS_pin,red_STCP_pin,red_SHCP_pin);
   writereg(yl_DS_pin,yl_STCP_pin,yl_SHCP_pin);
+
+  //blink a bunch of lights to indicate readiness
+  entirewall(30);
 }
 
 void loop() //check for each button press and then light up the corresponding LEDs
@@ -55,19 +58,23 @@ void loop() //check for each button press and then light up the corresponding LE
 if (digitalRead(grn_button) == LOW) {
     LEDblink(grn_DS_pin,grn_STCP_pin,grn_SHCP_pin);    
     LEDrandom(grn_DS_pin,grn_STCP_pin,grn_SHCP_pin);
+    entirewall(35);
     allblink(grn_DS_pin,grn_STCP_pin,grn_SHCP_pin);
   }
 
 if (digitalRead(red_button) == LOW) {
     LEDblink(red_DS_pin,red_STCP_pin,red_SHCP_pin);
     LEDrandom(red_DS_pin,red_STCP_pin,red_SHCP_pin);
-    allblink(red_DS_pin,red_STCP_pin,red_SHCP_pin); 
+    entirewall(35);
+    allblink(red_DS_pin,red_STCP_pin,red_SHCP_pin);
   }
 
 if (digitalRead(yl_button) == LOW) {
     LEDblink(yl_DS_pin,yl_STCP_pin,yl_SHCP_pin);
     LEDrandom(yl_DS_pin,yl_STCP_pin,yl_SHCP_pin);
+    entirewall(35);
     allblink(yl_DS_pin,yl_STCP_pin,yl_SHCP_pin);
+
   }
 }
 
@@ -125,10 +132,10 @@ void LEDrandom(int DS_pin, int STCP_pin, int SHCP_pin)
     }
 }
 
-//function that blinks all eight LEDs on and off 6 times.
+//function that blinks all eight LEDs on and off j times.
 void allblink(int DS_pin, int STCP_pin, int SHCP_pin)
 {
-    for(int j=0; j<=6; j++)
+    for(int j=0; j<=4; j++)
     {
       for(int i=0; i<=7; i++)
         registers[i] = HIGH;
@@ -139,4 +146,37 @@ void allblink(int DS_pin, int STCP_pin, int SHCP_pin)
       writereg(DS_pin,STCP_pin,SHCP_pin);
       delay(50);
     }   
+}
+
+//function that blinks randomly accross the entire wall.
+void entirewall(int blinks) {
+  for(int i=0; i<=blinks; i++)  {
+    int randomLED;    
+    int randomsection = random(1,4);
+    if (randomsection == 1) {
+        randomLED = random(0,8);
+        registers[randomLED] = HIGH;
+        writereg(grn_DS_pin,grn_STCP_pin,grn_SHCP_pin);
+        delay(50);
+        registers[randomLED] = LOW;
+        writereg(grn_DS_pin,grn_STCP_pin,grn_SHCP_pin);
+        delay(50);        
+    } else if (randomsection == 2) {
+        randomLED = random(0,8);
+        registers[randomLED] = HIGH;
+        writereg(red_DS_pin,red_STCP_pin,red_SHCP_pin);
+        delay(50);
+        registers[randomLED] = LOW;
+        writereg(red_DS_pin,red_STCP_pin,red_SHCP_pin);
+        delay(50);    
+    } else if (randomsection == 3) {
+        randomLED = random(0,8);
+        registers[randomLED] = HIGH;
+        writereg(yl_DS_pin,yl_STCP_pin,yl_SHCP_pin);
+        delay(50);
+        registers[randomLED] = LOW;
+        writereg(yl_DS_pin,yl_STCP_pin,yl_SHCP_pin);
+        delay(50); 
+    }
+  }
 }
