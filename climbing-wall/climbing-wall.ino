@@ -55,19 +55,19 @@ void loop() //check for each button press and then light up the corresponding LE
 if (digitalRead(grn_button) == LOW) {
     LEDblink(grn_DS_pin,grn_STCP_pin,grn_SHCP_pin);    
     LEDrandom(grn_DS_pin,grn_STCP_pin,grn_SHCP_pin);
-    threeblink(grn_DS_pin,grn_STCP_pin,grn_SHCP_pin);
+    allblink(grn_DS_pin,grn_STCP_pin,grn_SHCP_pin);
   }
 
 if (digitalRead(red_button) == LOW) {
     LEDblink(red_DS_pin,red_STCP_pin,red_SHCP_pin);
     LEDrandom(red_DS_pin,red_STCP_pin,red_SHCP_pin);
-    threeblink(red_DS_pin,red_STCP_pin,red_SHCP_pin); 
+    allblink(red_DS_pin,red_STCP_pin,red_SHCP_pin); 
   }
 
 if (digitalRead(yl_button) == LOW) {
     LEDblink(yl_DS_pin,yl_STCP_pin,yl_SHCP_pin);
     LEDrandom(yl_DS_pin,yl_STCP_pin,yl_SHCP_pin);
-    threeblink(yl_DS_pin,yl_STCP_pin,yl_SHCP_pin);
+    allblink(yl_DS_pin,yl_STCP_pin,yl_SHCP_pin);
   }
 }
 
@@ -112,9 +112,9 @@ void LEDblink(int DS_pin, int STCP_pin, int SHCP_pin)
 void LEDrandom(int DS_pin, int STCP_pin, int SHCP_pin)
 {
     int randomLED;
-    for(int i=0; i<=25; i++)
+    for(int i=0; i<=30; i++)
     {
-      randomLED = random(0,7);
+      randomLED = random(0,8);
       //randomLED = 0;
       registers[randomLED] = HIGH;
       writereg(DS_pin,STCP_pin,SHCP_pin);
@@ -125,10 +125,10 @@ void LEDrandom(int DS_pin, int STCP_pin, int SHCP_pin)
     }
 }
 
-//function that blinks all eight LEDs on and off 3 times.
-void threeblink(int DS_pin, int STCP_pin, int SHCP_pin)
+//function that blinks all eight LEDs on and off 6 times.
+void allblink(int DS_pin, int STCP_pin, int SHCP_pin)
 {
-    for(int j=0; j<=5; j++)
+    for(int j=0; j<=6; j++)
     {
       for(int i=0; i<=7; i++)
         registers[i] = HIGH;
