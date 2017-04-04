@@ -58,21 +58,21 @@ void loop() //check for each button press and then light up the corresponding LE
 if (digitalRead(grn_button) == LOW) {
     LEDblink(grn_DS_pin,grn_STCP_pin,grn_SHCP_pin);    
     LEDrandom(grn_DS_pin,grn_STCP_pin,grn_SHCP_pin);
-    entirewall(35);
+    entirewall(37);
     allblink(grn_DS_pin,grn_STCP_pin,grn_SHCP_pin);
   }
 
 if (digitalRead(red_button) == LOW) {
     LEDblink(red_DS_pin,red_STCP_pin,red_SHCP_pin);
     LEDrandom(red_DS_pin,red_STCP_pin,red_SHCP_pin);
-    entirewall(35);
+    entirewall(37);
     allblink(red_DS_pin,red_STCP_pin,red_SHCP_pin);
   }
 
 if (digitalRead(yl_button) == LOW) {
     LEDblink(yl_DS_pin,yl_STCP_pin,yl_SHCP_pin);
     LEDrandom(yl_DS_pin,yl_STCP_pin,yl_SHCP_pin);
-    entirewall(35);
+    entirewall(37);
     allblink(yl_DS_pin,yl_STCP_pin,yl_SHCP_pin);
 
   }
@@ -94,7 +94,7 @@ digitalWrite(STCP_pin, HIGH);
 //function that blinks LEDs on a shift register in order up then down.  
 void LEDblink(int DS_pin, int STCP_pin, int SHCP_pin)
 {
-  for(int j=0; j<=3; j++)                    //repeat pattern j times
+  for(int j=0; j<=1; j++)                    //repeat pattern j times
   {
     for(int i=0; i<=7; i++)                    //cycle LEDs from 0-7
     {
@@ -115,7 +115,7 @@ void LEDblink(int DS_pin, int STCP_pin, int SHCP_pin)
   } 
 }
 
-//function that blinks LEDs randomly with an increasing rate.
+//function that blinks LEDs randomly
 void LEDrandom(int DS_pin, int STCP_pin, int SHCP_pin)
 {
     int randomLED;
@@ -135,7 +135,7 @@ void LEDrandom(int DS_pin, int STCP_pin, int SHCP_pin)
 //function that blinks all eight LEDs on and off j times.
 void allblink(int DS_pin, int STCP_pin, int SHCP_pin)
 {
-    for(int j=0; j<=4; j++)
+    for(int j=0; j<=6; j++)
     {
       for(int i=0; i<=7; i++)
         registers[i] = HIGH;
