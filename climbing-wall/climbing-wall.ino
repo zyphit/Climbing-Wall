@@ -56,23 +56,26 @@ void setup()
 void loop() //check for each button press and then light up the corresponding LEDs
 {
 if (digitalRead(grn_button) == LOW) {
-    LEDblink(grn_DS_pin,grn_STCP_pin,grn_SHCP_pin);    
+   // LEDblink(grn_DS_pin,grn_STCP_pin,grn_SHCP_pin);    
     LEDrandom(grn_DS_pin,grn_STCP_pin,grn_SHCP_pin);
-    entirewall(37);
+    entirewall(50);
+    delay(500);
     allblink(grn_DS_pin,grn_STCP_pin,grn_SHCP_pin);
   }
 
 if (digitalRead(red_button) == LOW) {
-    LEDblink(red_DS_pin,red_STCP_pin,red_SHCP_pin);
+   // LEDblink(red_DS_pin,red_STCP_pin,red_SHCP_pin);
     LEDrandom(red_DS_pin,red_STCP_pin,red_SHCP_pin);
-    entirewall(37);
+    entirewall(40);
+    delay(500);
     allblink(red_DS_pin,red_STCP_pin,red_SHCP_pin);
   }
 
 if (digitalRead(yl_button) == LOW) {
-    LEDblink(yl_DS_pin,yl_STCP_pin,yl_SHCP_pin);
+   // LEDblink(yl_DS_pin,yl_STCP_pin,yl_SHCP_pin);
     LEDrandom(yl_DS_pin,yl_STCP_pin,yl_SHCP_pin);
-    entirewall(37);
+    entirewall(40);
+    delay(500);
     allblink(yl_DS_pin,yl_STCP_pin,yl_SHCP_pin);
 
   }
@@ -135,16 +138,16 @@ void LEDrandom(int DS_pin, int STCP_pin, int SHCP_pin)
 //function that blinks all eight LEDs on and off j times.
 void allblink(int DS_pin, int STCP_pin, int SHCP_pin)
 {
-    for(int j=0; j<=6; j++)
+    for(int j=0; j<=10; j++)
     {
       for(int i=0; i<=7; i++)
         registers[i] = HIGH;
       writereg(DS_pin,STCP_pin,SHCP_pin);
-      delay(100);
+      delay(75);
       for(int i=0; i<=7; i++)
         registers[i] = LOW;
       writereg(DS_pin,STCP_pin,SHCP_pin);
-      delay(50);
+      delay(75);
     }   
 }
 
