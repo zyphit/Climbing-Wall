@@ -4,8 +4,7 @@
 //controlling them, so three outputs per colour, plus three digital inputs for switches, 12 pins total.
 //based on code courtesy of EEEnthusiast.com.
 //
-//Each button press blinks through each LED three times, then blinks LEDs randomly 25 times, then blinks all
-//eight LEDs together three times.
+//For each button press, a series of blink pattern functions are called.
 //
 //Uses Arduino nano, three 74HC595 shift registers, 24 LEDs (8 ea of green, yellow, red), and three momentary
 //push buttons.
@@ -42,7 +41,7 @@ void setup()
   for(int i=2; i<=4; i++)
     pinMode(i,INPUT_PULLUP);
 
-  // turn off all ights to start    
+  // turn off all lights to start    
   for(int i=0; i<=7; i++)
       registers[i]= LOW;
   writereg(grn_DS_pin,grn_STCP_pin,grn_SHCP_pin);
@@ -50,7 +49,7 @@ void setup()
   writereg(yl_DS_pin,yl_STCP_pin,yl_SHCP_pin);
 
   //blink a bunch of lights to indicate readiness
-  entirewall(30);
+  entirewall(50);
 }
 
 void loop() //check for each button press and then light up the corresponding LEDs
@@ -58,7 +57,7 @@ void loop() //check for each button press and then light up the corresponding LE
 if (digitalRead(grn_button) == LOW) {
    // LEDblink(grn_DS_pin,grn_STCP_pin,grn_SHCP_pin);    
     LEDrandom(grn_DS_pin,grn_STCP_pin,grn_SHCP_pin);
-    entirewall(50);
+    entirewall(45);
     delay(500);
     allblink(grn_DS_pin,grn_STCP_pin,grn_SHCP_pin);
   }
@@ -66,7 +65,7 @@ if (digitalRead(grn_button) == LOW) {
 if (digitalRead(red_button) == LOW) {
    // LEDblink(red_DS_pin,red_STCP_pin,red_SHCP_pin);
     LEDrandom(red_DS_pin,red_STCP_pin,red_SHCP_pin);
-    entirewall(40);
+    entirewall(45);
     delay(500);
     allblink(red_DS_pin,red_STCP_pin,red_SHCP_pin);
   }
@@ -74,10 +73,9 @@ if (digitalRead(red_button) == LOW) {
 if (digitalRead(yl_button) == LOW) {
    // LEDblink(yl_DS_pin,yl_STCP_pin,yl_SHCP_pin);
     LEDrandom(yl_DS_pin,yl_STCP_pin,yl_SHCP_pin);
-    entirewall(40);
+    entirewall(45);
     delay(500);
     allblink(yl_DS_pin,yl_STCP_pin,yl_SHCP_pin);
-
   }
 }
 
@@ -94,10 +92,11 @@ for(int i=7; i>=0; i--)
 digitalWrite(STCP_pin, HIGH);
 }
 
+/*  Used this function for testing.  Not used in the final version but I want to keep the code.
 //function that blinks LEDs on a shift register in order up then down.  
 void LEDblink(int DS_pin, int STCP_pin, int SHCP_pin)
 {
-  for(int j=0; j<=1; j++)                    //repeat pattern j times
+  for(int j=0; j<=2; j++)                    //repeat pattern j times
   {
     for(int i=0; i<=7; i++)                    //cycle LEDs from 0-7
     {
@@ -116,16 +115,15 @@ void LEDblink(int DS_pin, int STCP_pin, int SHCP_pin)
     registers[0] = LOW;                      // turns off last LED at end of loop, previous for loop leaves this HIGH.
     writereg(DS_pin,STCP_pin,SHCP_pin);
   } 
-}
+} */
 
 //function that blinks LEDs randomly
 void LEDrandom(int DS_pin, int STCP_pin, int SHCP_pin)
 {
     int randomLED;
-    for(int i=0; i<=30; i++)
+    for(int i=0; i<=25; i++)
     {
       randomLED = random(0,8);
-      //randomLED = 0;
       registers[randomLED] = HIGH;
       writereg(DS_pin,STCP_pin,SHCP_pin);
       delay(50);
